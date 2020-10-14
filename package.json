@@ -1,0 +1,7 @@
+{
+  "name": "com.chatton.healthsystem",
+  "displayName": "Basic Health System",
+  "version": "1.0.0",
+  "unity": "2020.1",
+  "description": "Basic Health System which can be used in a variety of games"
+}
