@@ -22,16 +22,17 @@ namespace Core.PathFinding
                     GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     cube.name = $"cube_{i}_{j}";
                     MonoTest t = cube.AddComponent<MonoTest>();
-                    cube.transform.position = new Vector3(i, height, j);
-                    grid.Add((i, j), t, height);
+                    cube.transform.position = new Vector3(i, 0, j);
+                    // grid.Add((i, j), t, height);
+                    grid.Add((i, j), t, 0);
                 }
 
                 height += 2;
             }
 
 
-            var tiles = grid.FindAllTilesWithinRange((5, 5), 2, 2);
-            foreach (Tile<MonoTest> t in tiles)
+            var tiles = grid.FindAllTilesWithinRange((5, 5), 5, 2);
+            foreach (Tile<MonoTest> t in grid.BuildPathFromTile(grid.Get((7, 7))))
             {
                 Destroy(t.gameObject);
                 Debug.Log(t.name);
