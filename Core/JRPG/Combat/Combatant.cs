@@ -15,6 +15,9 @@ namespace Core.JRPG.Combat
 
         [SerializeField] private List<Ability> _abilities;
 
+        [SerializeField] private int _initiative;
+        public int Initiative => _initiative;
+
         private Health _health;
 
         private void Awake()
