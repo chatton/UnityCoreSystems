@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Core.HealthSystem;
+using DG.Tweening;
 using UnityEngine;
 
 namespace Core.JRPG.Combat.Abilities
@@ -14,20 +15,46 @@ namespace Core.JRPG.Combat.Abilities
 
         public override IEnumerator Use(Combatant user, List<Combatant> targets)
         {
-            // 1. move towards target
-            
-            // 2. play attack animation
-            
-            // 3. damage all the targets
-            
+            Vector3 startPos = user.transform.position;
+            yield return MoveToTarget(user, targets[0]);
+
             foreach (Combatant target in targets)
             {
-                target.GetComponent<Health>().Damage(baseDamage);
+                yield return AttackTarget(user, target);
             }
 
-            // 4. move away from target
-            
-            yield return null;
+            yield return JumpBackToStartingPosition(user, startPos);
+        }
+
+
+        private IEnumerator MoveToTarget(Combatant user, Combatant target)
+        {
+            // run up to the target.
+            user.transform.DOMove(target.transform.position + (target.transform.forward * 1.5f), 1f);
+            yield return new WaitForSeconds(1);
+        }
+
+        private IEnumerator AttackTarget(Combatant user, Combatant target)
+        {
+            int damage = baseDamage + Random.Range(0, baseDamage / 2);
+
+            // begin attack animation
+            user.transform.DOScale(new Vector3(1.2f, 1.2f, 1.2f), 0.1f);
+            yield return new WaitForSeconds(0.1f);
+
+            // do the actual damage
+            target.GetComponent<Health>().Damage(damage);
+
+            // finish attack animation
+            user.transform.DOScale(new Vector3(1, 1, 1), 0.1f);
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        private IEnumerator JumpBackToStartingPosition(Combatant user, Vector3 startPos)
+        {
+            // jump back to the original position
+            user.transform.DOJump(startPos, 1f, 1, 0.5f);
+            yield return new WaitForSeconds(0.5f);
         }
     }
 }
