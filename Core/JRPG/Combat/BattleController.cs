@@ -19,32 +19,31 @@ namespace Core.JRPG.Combat
         [SerializeField] private Party playerParty;
         [SerializeField] private Party enemyParty;
 
-        private EnemyTurnHandler _enemyTurnHandler;
-        private PlayerTurnHandler _playerTurnHandler;
+        // _aiTurnHandler will handle all decisions made by the AI for which actions should be used by the enemy.
+        private AITurnHandler _aiTurnHandler;
 
+        // _humanTurnHandler will wait for user inputs to make decisions.
+        private HumanTurnHandler _humanTurnHandler;
+
+        // _nextCombatantProvider returns the next Combatant who should act.
         private INextCombatantProvider _nextCombatantProvider;
 
-        // private Dictionary<Team, List<Combatant>> _combatantDict;
         private Dictionary<Team, TurnHandler> _turnHandlersDict;
 
 
         private void Awake()
         {
             _turnHandlersDict = new Dictionary<Team, TurnHandler>();
-            // _combatantDict = new Dictionary<Team, List<Combatant>>();
         }
-
 
         private IEnumerator Start()
         {
-            _turnHandlersDict[Team.Player] = FindObjectOfType<PlayerTurnHandler>();
-            _turnHandlersDict[Team.Enemy] = FindObjectOfType<EnemyTurnHandler>();
+            _turnHandlersDict[Team.Player] = FindObjectOfType<HumanTurnHandler>();
+            _turnHandlersDict[Team.Enemy] = FindObjectOfType<AITurnHandler>();
 
-            // _enemyTurnHandler = FindObjectOfType<EnemyTurnHandler>();
-            // _playerTurnHandler = FindObjectOfType<PlayerTurnHandler>();
 
-            var players = playerParty.Create(playerTeamLocations);
-            var enemies = enemyParty.Create(enemyLocations);
+            List<Combatant> players = playerParty.Create(playerTeamLocations);
+            List<Combatant> enemies = enemyParty.Create(enemyLocations);
 
             _nextCombatantProvider = new InitiativeBasedNextCombatantProvider(players.Concat(enemies).ToList());
 
@@ -52,14 +51,7 @@ namespace Core.JRPG.Combat
             {
                 Combatant c = _nextCombatantProvider.NextCombatant();
                 Debug.Log($"turn for {c.name}");
-                yield return _turnHandlersDict[c.Team].TakeTurn();
-                // Combatant player = players[Random.Range(0, 3)];
-                // Combatant enemy = enemies[Random.Range(0, 3)];
-                // yield return player.UseAbilityOn(enemy);
-
-                // Combatant player2 = players[Random.Range(0, 3)];
-                // Combatant enemy2 = enemies[Random.Range(0, 3)];
-                // yield return enemy2.UseAbilityOn(player2);
+                yield return _turnHandlersDict[c.Team].TakeTurn(c);
 
                 yield return null;
             }

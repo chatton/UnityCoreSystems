@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace Core.JRPG.Combat.Turns.Handlers
 {
-    public class PlayerTurnHandler : TurnHandler
+    public class HumanTurnHandler : TurnHandler
     {
-        public override IEnumerator TakeTurn()
+        public override IEnumerator TakeTurn(Combatant combatant)
         {
             Debug.Log("Taking player turn!");
             yield return new WaitForSeconds(1);
