@@ -29,26 +29,22 @@ namespace Core.JRPG.Combat
 
         private IEnumerator Start()
         {
-            playerParty.Create(playerTeamLocations);
-            enemyParty.Create(enemyLocations);
+            var players = playerParty.Create(playerTeamLocations);
+            var enemies = enemyParty.Create(enemyLocations);
 
-            var player = _combatantDict[Team.Player][0];
-            var enemy = _combatantDict[Team.Enemy][0];
 
-            while (player != null && enemy != null)
+            while (true)
             {
-                if (player != null)
-                {
-                    yield return player.UseAbilityOn(enemy);
-                }
-
-                if (enemy != null)
-                {
-                    yield return enemy.UseAbilityOn(player);
-                }
+                Combatant player = players[Random.Range(0, 3)];
+                Combatant enemy = enemies[Random.Range(0, 3)];
+                yield return player.UseAbilityOn(enemy);
+                
+                Combatant player2 = players[Random.Range(0, 3)];
+                Combatant enemy2 = enemies[Random.Range(0, 3)];
+                yield return enemy2.UseAbilityOn(player2);
+                
+                yield return null;
             }
-
-            Debug.Log("Battle Over!");
         }
     }
 }
