@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace HealthSystem
+namespace Core.HealthSystem
 {
     public class Health : MonoBehaviour
     {
