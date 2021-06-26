@@ -10,7 +10,6 @@ namespace Core.JRPG.Combat.Turns.Handlers
     {
         public override IEnumerator TakeTurn(Combatant combatant)
         {
-            Debug.Log("Taking enemy turn!");
             yield return new WaitForSeconds(1);
         }
     }

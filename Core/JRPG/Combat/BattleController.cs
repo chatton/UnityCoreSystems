@@ -53,7 +53,7 @@ namespace Core.JRPG.Combat
                 Debug.Log($"turn for {c.name}");
                 yield return _turnHandlersDict[c.Team].TakeTurn(c);
 
-                yield return null;
+                // yield return null;
             }
         }
     }

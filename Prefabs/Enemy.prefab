@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 991cabe4ce7024b3e8d88597270e2347, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _team: 0
+  _team: 1
   _abilities:
   - {fileID: 11400000, guid: a26d97e17eea742949f6fe212203af07, type: 2}
+  _initiative: 0

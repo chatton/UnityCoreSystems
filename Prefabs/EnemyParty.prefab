@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3601c99973bf4733844debba6bd28f60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  team: 0
+  team: 1
   combatantPrefabs:
   - {fileID: 646714459099816250, guid: 9acbd4ccd072b40a791d2c04fb7bf0e5, type: 3}
   - {fileID: 646714459099816250, guid: 9acbd4ccd072b40a791d2c04fb7bf0e5, type: 3}
