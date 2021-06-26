@@ -9,7 +9,9 @@ namespace Core.JRPG.Combat
     [RequireComponent(typeof(Health))]
     public class Combatant : MonoBehaviour
     {
-        [SerializeField] private JRPGTeam _team;
+        [SerializeField] private Team _team;
+        public Team Team => _team;
+        
         [SerializeField] private List<Ability> _abilities;
 
         private Health _health;

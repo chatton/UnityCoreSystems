@@ -5,11 +5,12 @@ using UnityEngine;
 
 namespace Core.JRPG.Combat.Abilities
 {
-
     public abstract class Ability : ScriptableObject
     {
         [SerializeField] [Description("Whether or not the ability can be used on the caster themselves.")]
         protected bool canSelfCast;
+
+        public AbilityType type = AbilityType.SingleTarget;
 
         public abstract IEnumerator Use(Combatant user, List<Combatant> targets);
     }

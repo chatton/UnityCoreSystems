@@ -30,7 +30,8 @@ namespace Core.JRPG.Combat.Abilities
         private IEnumerator MoveToTarget(Combatant user, Combatant target)
         {
             // run up to the target.
-            user.transform.DOMove(target.transform.position + (target.transform.forward * 1.5f), 1f);
+            var transform = target.transform;
+            user.transform.DOMove(transform.position + transform.forward * 1.5f, 1f);
             yield return new WaitForSeconds(1);
         }
 
