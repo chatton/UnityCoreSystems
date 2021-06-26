@@ -23,7 +23,7 @@ namespace Core.State
             CurrentState?.Tick(deltaTime);
         }
 
-        private void SetState(IState state)
+        public void SetState(IState state)
         {
             if (state == CurrentState)
             {

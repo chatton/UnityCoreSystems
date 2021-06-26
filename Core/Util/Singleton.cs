@@ -24,7 +24,7 @@ namespace Core.Util
 
                 return _instance;
             }
-            private set => Instance = value;
+            private set => _instance = value;
         }
     }
 }
