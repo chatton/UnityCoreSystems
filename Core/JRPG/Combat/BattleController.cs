@@ -23,7 +23,7 @@ namespace Core.JRPG.Combat
         private AITurnHandler _aiTurnHandler;
 
         // _humanTurnHandler will wait for user inputs to make decisions.
-        private HumanTurnHandler _humanTurnHandler;
+        private PlayerTurnHandler _playerTurnHandler;
 
         // _nextCombatantProvider returns the next Combatant who should act.
         private INextCombatantProvider _nextCombatantProvider;
@@ -38,12 +38,12 @@ namespace Core.JRPG.Combat
 
         private IEnumerator Start()
         {
-            _turnHandlersDict[Team.Player] = FindObjectOfType<HumanTurnHandler>();
+            _turnHandlersDict[Team.Player] = FindObjectOfType<PlayerTurnHandler>();
             _turnHandlersDict[Team.Enemy] = FindObjectOfType<AITurnHandler>();
 
 
-            List<Combatant> players = playerParty.Create(playerTeamLocations);
-            List<Combatant> enemies = enemyParty.Create(enemyLocations);
+            IEnumerable<Combatant> players = playerParty.Create(playerTeamLocations);
+            IEnumerable<Combatant> enemies = enemyParty.Create(enemyLocations);
 
             _nextCombatantProvider = new InitiativeBasedNextCombatantProvider(players.Concat(enemies).ToList());
 
@@ -52,8 +52,6 @@ namespace Core.JRPG.Combat
                 Combatant c = _nextCombatantProvider.NextCombatant();
                 Debug.Log($"turn for {c.name}");
                 yield return _turnHandlersDict[c.Team].TakeTurn(c);
-
-                // yield return null;
             }
         }
     }

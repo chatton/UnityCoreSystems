@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Core.JRPG.Combat.Turns.Handlers
 {
-    public class HumanTurnHandler : TurnHandler
+    public class PlayerTurnHandler : TurnHandler
     {
         private Camera _camera;
 
@@ -15,7 +15,6 @@ namespace Core.JRPG.Combat.Turns.Handlers
 
         public override IEnumerator TakeTurn(Combatant combatant)
         {
-            Debug.Log("Player phase!");
             while (true)
             {
                 if (Input.GetMouseButtonDown(0))
@@ -24,11 +23,22 @@ namespace Core.JRPG.Combat.Turns.Handlers
                     if (Physics.Raycast(GetMouseRay(), out hit))
                     {
                         Combatant target = hit.collider.GetComponent<Combatant>();
-                        if (target != null)
+                        
+                        // object was not a combatant
+                        if (target == null)
                         {
-                            yield return combatant.UseAbilityOn(target);
-                            yield break;
+                            continue;
                         }
+
+                        // trying to cast on self, but cannot!
+                        if (target == combatant && !combatant.GetSelectedAbility().canSelfCast)
+                        {
+                            continue;
+                        }
+
+                        // valid target selected
+                        yield return combatant.UseAbilityOn(target);
+                        yield break;
                     }
                 }
 

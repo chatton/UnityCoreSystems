@@ -9,7 +9,7 @@ namespace Core.JRPG.Combat
         public Team team;
         public List<Combatant> combatantPrefabs;
 
-        public List<Combatant> Create(List<Transform> positions)
+        public IEnumerable<Combatant> Create(List<Transform> positions)
         {
             Assert.IsTrue(combatantPrefabs.Count <= positions.Count);
             List<Combatant> combatants = new List<Combatant>();

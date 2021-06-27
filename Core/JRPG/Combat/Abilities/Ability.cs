@@ -8,7 +8,7 @@ namespace Core.JRPG.Combat.Abilities
     public abstract class Ability : ScriptableObject
     {
         [SerializeField] [Description("Whether or not the ability can be used on the caster themselves.")]
-        protected bool canSelfCast;
+        public bool canSelfCast;
 
         public AbilityType type = AbilityType.SingleTarget;
 
